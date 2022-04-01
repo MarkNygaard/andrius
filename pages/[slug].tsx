@@ -1,29 +1,18 @@
-import type { NextPage } from 'next';
+import React from 'react';
 import Layout from '../components/Layout';
 import { request } from '../lib/datocms';
-import Link from 'next/link';
+import useRouter from 'next/router';
 
-const Home: NextPage = ({ data }: any) => {
+export default function about({ data }: any) {
   return (
     <Layout>
-      <div className="p-2">
-        {data.allFrontpages.map((pages: any) => (
-          <div key={pages.id} className="p-2 hover:text-red-500">
-            <Link href={`/${pages.slug}`}>
-              <a>{pages.title}</a>
-            </Link>
-          </div>
-        ))}
-      </div>
-      {console.log(JSON.stringify(data.allFrontpages[0].title))}
+      <div>{data.frontpage.title}</div>
     </Layout>
   );
-};
-
-export default Home;
+}
 
 const HOMEPAGE_QUERY = `query HomePage {
-  allFrontpages {
+  frontpage(filter: {slug: {eq: "about"}}) {
     id
     title
     slug
